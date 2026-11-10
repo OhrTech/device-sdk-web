@@ -22,7 +22,8 @@
   "scripts": {
     "build": "node build.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "node test/off-device.mjs"
+    "test": "node test/off-device.mjs",
+    "prepublishOnly": "npm run typecheck && npm run build && npm test"
   },
   "keywords": [
     "ohrtech",
