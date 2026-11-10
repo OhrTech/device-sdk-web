@@ -2,6 +2,7 @@
 
 What a site running as an OhrTech web app can ask the device for: the device, its updates, Wi-Fi, network, kiosk
 mode, power, settings, managed configuration, attestation, client certificates, USB devices, diagnostics and TEE keys.
+Documentation: <https://docs.ohrtech.net/web-apps/device-sdk/>.
 The same site runs in any browser: there, `OhrTech.isDevice()` is false and every call fails with `OhrNotManaged`.
 
 ```html
@@ -25,7 +26,7 @@ file you pinned with `integrity` never changes. Host the file yourself, or check
 someone else's server would run with the SDK's powers.
 
 The SDK answers only on the web app's own origins, in its main frame (frames only when the administrator lists their
-origin), and only when the web app's mode is `sdk`. The fleet's grants apply to every call. The site can also declare
+origin), and only when the web app's mode is `sdk` or `packaged`. The fleet's grants apply to every call. The site can also declare
 the most it wants in its web app manifest; anything else is refused, whatever the fleet grants:
 
 ```json
