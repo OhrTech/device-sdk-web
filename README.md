@@ -32,7 +32,12 @@ the most it wants in its web app manifest; anything else is refused, whatever th
 "ohrtech_device_sdk": { "device": ["self"], "wifi": ["self"], "config": ["self"] }
 ```
 
+## Examples
+
+- [`examples/kiosk-site`](examples/kiosk-site): a site that uses the SDK, notifications and push.
+- [`examples/packaged`](examples/packaged): build a Signed Web Bundle for a packaged web app.
+
 ## Building
 
-`npm install && npm run build`: `dist/` has the ES module with its types, `ohrtech-device-sdk-<version>.min.js`
+`npm install && npm run build && npm test`: `dist/` has the ES module with its types, `ohrtech-device-sdk-<version>.min.js`
 (the global `OhrTech`) and its integrity value.

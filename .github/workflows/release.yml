@@ -1,0 +1,53 @@
+# Push a tag such as v1.0.0 to publish that version to npm, and attach the script file and its integrity value to a
+# GitHub release. Publishing uses npm's trusted publishing from GitHub Actions (no stored token): the package's
+# settings on npmjs.com trust this repository's release.yml in the "release" environment, and npm attaches provenance.
+name: Release
+
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+*']
+
+permissions:
+  contents: write
+  id-token: write   # the OIDC token npm takes instead of a stored credential
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: release
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+
+      - name: The tag is the package's version
+        run: |
+          v=$(node -p "require('./package.json').version")
+          test "v$v" = "$GITHUB_REF_NAME" || { echo "tag $GITHUB_REF_NAME, package.json $v"; exit 1; }
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm test
+
+      # A version already on npm (the first one, published by a person) isn't sent again.
+      - name: Publish
+        run: |
+          v=${GITHUB_REF_NAME#v}
+          if [ -n "$(npm view "@ohrtech/device-sdk-web@$v" version 2>/dev/null)" ]; then
+            echo "@ohrtech/device-sdk-web $v is already on npm"; exit 0
+          fi
+          npm install -g npm@latest
+          tag=latest; [[ "$GITHUB_REF_NAME" == *-* ]] && tag=next
+          npm publish --access public --tag "$tag"
+
+      - name: GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          v=${GITHUB_REF_NAME#v}
+          gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" \
+            --notes "See CHANGELOG.md. Integrity: $(cat dist/ohrtech-device-sdk-$v.min.js.sri)" \
+            "dist/ohrtech-device-sdk-$v.min.js" "dist/ohrtech-device-sdk-$v.min.js.sri" \
+            $([[ "$GITHUB_REF_NAME" == *-* ]] && echo --prerelease)

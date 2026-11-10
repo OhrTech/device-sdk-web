@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Store kiosk</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<!-- Pin the version you tested, with its integrity value (the GitHub release and npm package give it), and host the
+     file yourself: a script from someone else's server would run with the SDK's powers. -->
+<script src="/js/ohrtech-device-sdk-1.0.0.min.js" integrity="sha384-REPLACE-WITH-THE-RELEASE-VALUE" crossorigin="anonymous"></script>
+<style>
+  body { font: 18px system-ui, sans-serif; margin: 2rem; }
+  button { font: inherit; padding: .6rem 1rem; margin: .25rem 0; }
+  #device { color: #555; }
+</style>
+
+<h1>Store kiosk</h1>
+<p id="device">In a browser: the device features below are off.</p>
+<button id="wifi" hidden>Wi-Fi</button>
+<button id="notify">Notify me</button>
+
+<script type="module" src="/app.js"></script>
+</html>

@@ -14,15 +14,30 @@
     },
     "./package.json": "./package.json"
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "node build.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node test/off-device.mjs"
   },
-  "keywords": ["ohrtech", "web app", "kiosk", "mdm", "device"],
+  "keywords": [
+    "ohrtech",
+    "web app",
+    "kiosk",
+    "mdm",
+    "device"
+  ],
   "devDependencies": {
     "esbuild": "0.25.12",
     "typescript": "5.9.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OhrTech/device-sdk-web.git"
+  },
+  "homepage": "https://docs.ohrtech.net/web-apps/device-sdk/"
 }

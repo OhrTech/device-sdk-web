@@ -131,7 +131,7 @@ export interface OhrEnvironment {
   shellVersion: number | null;
   /** The SDK interfaces the shell implements, or []. */
   interfaces: number[];
-  /** locked (no SDK), sdk, or packaged; null off the device. */
+  /** locked (no SDK), sdk, or packaged (the site's files from a signed bundle); null off the device. */
   mode: 'locked' | 'sdk' | 'packaged' | null;
 }
 
@@ -438,12 +438,30 @@ export interface OhrKeysArea {
   attest(alias: string, challenge: Uint8Array): Promise<OhrKeyAttestation>;
 }
 
+/** A packaged web app's bundle: the version running, and one downloaded and waiting, if any. */
+export interface OhrBundleInfo {
+  /** The running bundle's version (its manifest's), or null when the app isn't packaged. */
+  version: string | null;
+  /** The running bundle's Web Bundle ID. */
+  bundleId: string | null;
+  /** A newer version downloaded and verified, waiting to be applied, or null. */
+  staged: string | null;
+}
+
 /** The web app itself. */
 export interface OhrAppArea {
   /** Loads the app's start URL again. */
   reload(): Promise<void>;
   /** Clears the app's cookies, storage and cache, then loads the start URL (as the idle reset does). */
   clearData(): Promise<void>;
+  /** A packaged web app's bundle: what runs, and what waits. */
+  bundle(): Promise<OhrBundleInfo>;
+  /** Reads the update manifest now; a newer version is downloaded and staged (then `staged` says which). */
+  checkForUpdate(): Promise<OhrBundleInfo>;
+  /** Applies the staged version now: the app's service workers go and the start URL loads from the new bundle. */
+  applyUpdate(): Promise<void>;
+  /** A newer version was staged. */
+  addUpdateListener(listener: (info: OhrBundleInfo) => void, onError?: ErrorListener): OhrSubscription;
 }
 
 /** What the shell's bind gives: interface 1's areas. */

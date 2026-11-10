@@ -1,0 +1,16 @@
+{
+  "id": "/",
+  "name": "Store kiosk",
+  "short_name": "Kiosk",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#1f6f43",
+  "background_color": "#ffffff",
+  "icons": [{ "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }],
+  "ohrtech_device_sdk": {
+    "device": ["self"],
+    "wifi": ["self"],
+    "config": ["self"]
+  }
+}
