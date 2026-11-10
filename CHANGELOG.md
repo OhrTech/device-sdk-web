@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 (unreleased)
+## 1.0.0 (2026-11-10)
 
 The first release: interface 1 of the Device SDK for OhrTech web apps.
 
