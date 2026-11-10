@@ -1,0 +1,28 @@
+{
+  "name": "@ohrtech/device-sdk-web",
+  "version": "1.0.0",
+  "description": "The OhrTech Device SDK for web apps: what a site running as an OhrTech web app can ask the device for. The device, its updates, Wi-Fi, network, kiosk mode, power, settings, managed configuration, attestation, client certificates, USB devices, diagnostics and TEE keys. In any other browser it reports that it isn't on a device.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["dist", "src"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["ohrtech", "web app", "kiosk", "mdm", "device"],
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "typescript": "5.9.3"
+  }
+}
